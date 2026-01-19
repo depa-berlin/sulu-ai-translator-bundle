@@ -55,35 +55,36 @@ class AITranslatorAdmin extends Admin
             );
         }
 
+
         // Attach translator toolbar to page edit form
-        if ($viewCollection->has('sulu_page.page_edit_form.details')) {
+        if ($viewCollection->has('sulu_page.page_edit_form.content')) {
             /** @var FormViewBuilderInterface $pageEditFormViewBuilder */
-            $pageEditFormViewBuilder = $viewCollection->get('sulu_page.page_edit_form.details');
+            $pageEditFormViewBuilder = $viewCollection->get('sulu_page.page_edit_form.content');
             $pageEditFormViewBuilder->addToolbarActions([
                 new ToolbarAction('ai_translator.toolbar', ['allow_overwrite' => true]),
             ]);
         }
 
         // Attach translator toolbar to sulu-form edit form
-        if ($viewCollection->has('sulu_form.edit_form.details')) {
+        if ($viewCollection->has('sulu_form.edit_form.content')) {
             /** @var FormViewBuilderInterface $formEditFormViewBuilder */
-            $formEditFormViewBuilder = $viewCollection->get('sulu_form.edit_form.details');
+            $formEditFormViewBuilder = $viewCollection->get('sulu_form.edit_form.content');
             $formEditFormViewBuilder->addToolbarActions([
                 new ToolbarAction('ai_translator.toolbar', ['allow_overwrite' => true]),
             ]);
         }
 
         // Attach translator toolbar to snippet form edit form
-        if ($viewCollection->has('sulu_snippet.edit_form.details')) {
+        if ($viewCollection->has('sulu_snippet.snippet.edit_tabs.content')) {
             /** @var FormViewBuilderInterface $snippetEditFormViewBuilder */
-            $snippetEditFormViewBuilder = $viewCollection->get('sulu_snippet.edit_form.details');
+            $snippetEditFormViewBuilder = $viewCollection->get('sulu_snippet.snippet.edit_tabs.content');
             $snippetEditFormViewBuilder->addToolbarActions([
                 new ToolbarAction('ai_translator.toolbar', ['allow_overwrite' => true]),
             ]);
         }
     }
 
-    public function getSecurityContexts()
+    public function getSecurityContexts(): array
     {
         return [
             self::SULU_ADMIN_SECURITY_SYSTEM => [
