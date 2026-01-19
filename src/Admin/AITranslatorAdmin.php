@@ -11,13 +11,12 @@ use Sulu\Bundle\AdminBundle\Admin\View\ToolbarAction;
 use Sulu\Bundle\AdminBundle\Admin\View\ViewBuilderFactoryInterface;
 use Sulu\Bundle\AdminBundle\Admin\View\FormViewBuilderInterface;
 use Sulu\Bundle\AdminBundle\Admin\View\ViewCollection;
-use Sulu\Bundle\PageBundle\Admin\PageAdmin;
 use Sulu\Component\Security\Authorization\PermissionTypes;
 use Sulu\Component\Security\Authorization\SecurityCheckerInterface;
 
 /**
  * - Adds link to settings navigation tab
- * - Connects route with TranslatorConfigView.js 
+ * - Connects route with TranslatorConfigView.js
  */
 class AITranslatorAdmin extends Admin
 {
@@ -56,7 +55,7 @@ class AITranslatorAdmin extends Admin
             );
         }
 
-        // Attach translator toolbar to page edit form 
+        // Attach translator toolbar to page edit form
         if ($viewCollection->has('sulu_page.page_edit_form.details')) {
             /** @var FormViewBuilderInterface $pageEditFormViewBuilder */
             $pageEditFormViewBuilder = $viewCollection->get('sulu_page.page_edit_form.details');
@@ -99,7 +98,7 @@ class AITranslatorAdmin extends Admin
 
     public static function getPriority(): int
     {
-        return PageAdmin::getPriority() - 1;
+        return Admin::getPriority() - 1;
     }
 
     public function getConfigKey(): ?string
