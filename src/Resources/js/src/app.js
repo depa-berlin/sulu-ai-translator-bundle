@@ -16,6 +16,7 @@ const FIELD_TYPE_TEXT_AREA = "text_area";
 const FIELD_TYPE_TEXT_EDITOR = "text_editor";
 
 const TRANSLATION_CONFIG_VIEW = "ai_translator.config";
+const FIELD_TYPE_CONFIG_LINE = "config_line";
 
 initializer.addUpdateConfigHook("sulu_admin", (config, initialized) => {
     if (!initialized) {
@@ -44,6 +45,11 @@ initializer.addUpdateConfigHook("sulu_admin", (config, initialized) => {
         fieldRegistry.add(
             FIELD_TYPE_TEXT_EDITOR,
             withAITranslatorButton(TextEditor)
+        );
+
+        fieldRegistry.add(
+            FIELD_TYPE_CONFIG_LINE,
+            Input
         );
     }
 });
