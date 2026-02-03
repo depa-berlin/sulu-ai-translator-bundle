@@ -18,8 +18,10 @@ const FIELD_TYPE_TEXT_EDITOR = "text_editor";
 const TRANSLATION_CONFIG_VIEW = "ai_translator.config";
 const FIELD_TYPE_CONFIG_LINE = "config_line";
 
+const IS_ENABLED = true; // Set too false to disable the AI translator features
+
 initializer.addUpdateConfigHook("sulu_admin", (config, initialized) => {
-    if (!initialized) {
+    if (!initialized && IS_ENABLED) {
         // Connect translator config view
         viewRegistry.add(TRANSLATION_CONFIG_VIEW, AITranslatorConfig);
 
@@ -46,7 +48,9 @@ initializer.addUpdateConfigHook("sulu_admin", (config, initialized) => {
             FIELD_TYPE_TEXT_EDITOR,
             withAITranslatorButton(TextEditor)
         );
+    }
 
+    if (!initialized) {
         fieldRegistry.add(
             FIELD_TYPE_CONFIG_LINE,
             Input
