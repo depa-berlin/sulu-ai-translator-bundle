@@ -8,7 +8,7 @@
             class="Robole\SuluAITranslatorBundle\Admin\AITranslatorAdmin">
             <argument type="service" id="sulu_admin.view_builder_factory" />
             <argument type="service" id="sulu_security.security_checker" />
-            <argument>%sulu_admin.name%</argument>
+            <argument>%sulu_ai_translator.is_enabled%</argument>
 
             <tag name="sulu.admin" />
             <tag name="sulu.context" context="admin" />

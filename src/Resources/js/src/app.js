@@ -2,6 +2,7 @@ import { initializer } from "sulu-admin-bundle/services";
 import { fieldRegistry, viewRegistry } from "sulu-admin-bundle/containers";
 import { formToolbarActionRegistry } from "sulu-admin-bundle/views";
 import { Input, TextArea, TextEditor } from "sulu-admin-bundle/containers/Form";
+import {Config} from "sulu-admin-bundle/services/Config";
 
 import "./translator.css";
 import {
@@ -18,36 +19,37 @@ const FIELD_TYPE_TEXT_EDITOR = "text_editor";
 const TRANSLATION_CONFIG_VIEW = "ai_translator.config";
 const FIELD_TYPE_CONFIG_LINE = "config_line";
 
-const IS_ENABLED = true; // Set too false to disable the AI translator features
+initializer.addUpdateConfigHook("ai_translator", (config, initialized) => {
+    if (!initialized) {
 
-initializer.addUpdateConfigHook("sulu_admin", (config, initialized) => {
-    if (!initialized && IS_ENABLED) {
-        // Connect translator config view
-        viewRegistry.add(TRANSLATION_CONFIG_VIEW, AITranslatorConfig);
+        if (config.is_enabled) {
+            // Connect translator config view
+            viewRegistry.add(TRANSLATION_CONFIG_VIEW, AITranslatorConfig);
 
-        // Connect translator toolbar
-        formToolbarActionRegistry.add(
-            "ai_translator.toolbar",
-            AITranslatorToolbarAction
-        );
+            // Connect translator toolbar
+            formToolbarActionRegistry.add(
+                "ai_translator.toolbar",
+                AITranslatorToolbarAction
+            );
 
-        // Override sulu field types
-        // This is a bit verbose and should be fixed within fieldRegistry itself
-        // Another approach via webpack resolve alias lead to recursion
-        // @todo Submit sulu/sulu PR: Allow overriding of fieldRegistry items
-        delete fieldRegistry.fields[FIELD_TYPE_TEXT_LINE];
-        delete fieldRegistry.fields[FIELD_TYPE_TEXT_AREA];
-        delete fieldRegistry.fields[FIELD_TYPE_TEXT_EDITOR];
+            // Override sulu field types
+            // This is a bit verbose and should be fixed within fieldRegistry itself
+            // Another approach via webpack resolve alias lead to recursion
+            // @todo Submit sulu/sulu PR: Allow overriding of fieldRegistry items
+            delete fieldRegistry.fields[FIELD_TYPE_TEXT_LINE];
+            delete fieldRegistry.fields[FIELD_TYPE_TEXT_AREA];
+            delete fieldRegistry.fields[FIELD_TYPE_TEXT_EDITOR];
 
-        fieldRegistry.add(FIELD_TYPE_TEXT_LINE, withAITranslatorButton(Input));
-        fieldRegistry.add(
-            FIELD_TYPE_TEXT_AREA,
-            withAITranslatorButton(TextArea)
-        );
-        fieldRegistry.add(
-            FIELD_TYPE_TEXT_EDITOR,
-            withAITranslatorButton(TextEditor)
-        );
+            fieldRegistry.add(FIELD_TYPE_TEXT_LINE, withAITranslatorButton(Input));
+            fieldRegistry.add(
+                FIELD_TYPE_TEXT_AREA,
+                withAITranslatorButton(TextArea)
+            );
+            fieldRegistry.add(
+                FIELD_TYPE_TEXT_EDITOR,
+                withAITranslatorButton(TextEditor)
+            );
+        }
     }
 
     if (!initialized) {

@@ -16,6 +16,9 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
         $rootNode
             ->children()
+                ->booleanNode('is_enabled')
+                    ->defaultFalse()
+                    ->end()
                 ->scalarNode('deepl_api_key')
                     ->end()
                 ->arrayNode('locale_mapping')

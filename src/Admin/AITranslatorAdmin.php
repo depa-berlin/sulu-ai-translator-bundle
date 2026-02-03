@@ -30,7 +30,8 @@ class AITranslatorAdmin extends Admin
 
     public function __construct(
         ViewBuilderFactoryInterface $viewBuilderFactory,
-        SecurityCheckerInterface $securityChecker
+        SecurityCheckerInterface $securityChecker,
+        private readonly bool $isEnabled
     ) {
         $this->viewBuilderFactory = $viewBuilderFactory;
         $this->securityChecker = $securityChecker;
@@ -38,6 +39,10 @@ class AITranslatorAdmin extends Admin
 
     public function configureNavigationItems(NavigationItemCollection $navigationItemCollection): void
     {
+        if (!$this->isEnabled) {
+            return;
+        }
+
         if ($this->securityChecker->hasPermission(AITranslatorAdmin::SECURITY_CONTEXT, PermissionTypes::VIEW)) {
             $AITranslatorAdminNavigationItem = new NavigationItem('app.translator_config_headline');
             $AITranslatorAdminNavigationItem->setPosition(999);
@@ -49,6 +54,10 @@ class AITranslatorAdmin extends Admin
 
     public function configureViews(ViewCollection $viewCollection): void
     {
+        if (!$this->isEnabled) {
+            return;
+        }
+
         if ($this->securityChecker->hasPermission(AITranslatorAdmin::SECURITY_CONTEXT, PermissionTypes::VIEW)) {
             $viewCollection->add(
                 $this->viewBuilderFactory->createViewBuilder(self::TRANSLATION_CONFIG_VIEW, '/translation', self::TRANSLATION_CONFIG_VIEW)
@@ -105,5 +114,11 @@ class AITranslatorAdmin extends Admin
     public function getConfigKey(): ?string
     {
         return 'ai_translator';
+    }
+
+    public function getConfig(): array {
+        return [
+            'is_enabled' => $this->isEnabled,
+        ];
     }
 }
