@@ -2,7 +2,6 @@ import { initializer } from "sulu-admin-bundle/services";
 import { fieldRegistry, viewRegistry } from "sulu-admin-bundle/containers";
 import { formToolbarActionRegistry } from "sulu-admin-bundle/views";
 import { Input, TextArea, TextEditor } from "sulu-admin-bundle/containers/Form";
-import {Config} from "sulu-admin-bundle/services/Config";
 
 import "./translator.css";
 import {
